@@ -253,8 +253,6 @@ int main(int argc, char **argv)
     top->eval();
     update_stats(top);
     update_vcd(tfp, 0, 0);
-    top->mem_ignt_i = 1;
-    top->mem_gnt_i = 1;
     char *endptr;
     int vreg_w = strtol(argv[7], &endptr, 10);
 
@@ -464,7 +462,7 @@ int main(int argc, char **argv)
         if (top->mem_ireq_o && top->mem_ignt_i)
         {
             num_outstanding_imem++;
-            if (num_outstanding_imem == 1)
+            if (num_outstanding_imem == 2)
             {
                 imem_busy = true; // only two outstanding request allowed
             }
