@@ -4,7 +4,7 @@ ENTRY(_start)
 MEMORY
 {
     boot : ORIGIN = 0x00000000, LENGTH = 0x00002000 /*   8 kB */
-    ram  : ORIGIN = 0x00002000, LENGTH = 0x004FE000 /* 248 kB */
+    ram  : ORIGIN = 0x00002000, LENGTH = 0x040FE000 /* 248 kB */
 }
 
 

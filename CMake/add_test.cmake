@@ -47,7 +47,7 @@ macro(add_unit_test TEST_NAME)
 
     #Add Test
     add_test(NAME ${TEST_NAME}
-             COMMAND ${MODEL_DIR}/verilated_model ${BUILD_DIR}/vector-tests/prog_${TEST_NAME}.txt ${MEM_PORTS} ${MEM_W} 4194304 ${MEM_LATENCY} 1 ${TEST_NAME} ${VREG_W} ${TEST_CASE_NUM} ${VCD_TRACE_FLAG} ${VCD_TRACE_ARG}
+             COMMAND ${MODEL_DIR}/verilated_model ${BUILD_DIR}/vector-tests/prog_${TEST_NAME}.txt ${MEM_PORTS} ${MEM_W} 68149248 ${MEM_LATENCY} 1 ${TEST_NAME} ${VREG_W} ${TEST_CASE_NUM} ${VCD_TRACE_FLAG} ${VCD_TRACE_ARG}
              WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
     message(STATUS "Successfully added ${TEST_NAME}")
