@@ -17,6 +17,7 @@ message(STATUS "CMake Version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CM
 ####################
 
 project(Verilated-Builds LANGUAGES C CXX DESCRIPTION "Environment for Verilating Models")
+include(CTest)
 find_package(verilator HINTS ${CMAKE_CURRENT_SOURCE_DIR}/../toolchain/verilator)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -29,6 +30,7 @@ option(TRACE "Enable minimal VCD trace outputs" OFF)
 option(TRACE_FULL "Enable FULL VCD trace outputs" OFF) #TODO: prevent this option from being cached, force user to always manually enable it
 option(OLD_VICUNA "Old vicuna without vl abort" ON)
 option(FORCE_ALIGNED_READS "Forces aligned reads for cv32 and vproc" ON)
+option(BUILD_CMO_UNIT_TESTS "Build standalone CMO core unit tests" OFF)
 
 ########
 ## Import RTL configuration from here instead of command line.
@@ -449,6 +451,7 @@ if ( ${SCALAR_CORE} STREQUAL "cv32e40x" )
                                 -Wno-ENUMVALUE 
                                 -Wno-SELRANGE -Wno-LATCH #These might be caused from not connecting everything properly
                                 -Wno-IMPLICITSTATIC
+                                -Wfuture-IEEEMAYDEPRECATE
                                 -Wno-IEEEMAYDEPRECATE
                                 #+define+COREV_ASSERT_OFF       #Fixes UVM error with CV32E40X (Needed when not using -DVPROC_SVA)
                                 ${TRACE_FLAG} 
@@ -482,6 +485,7 @@ elseif( ${SCALAR_CORE} STREQUAL "cv32a60x" ) #TODO: Verify/Test support for floa
                                 -Wno-ENUMVALUE 
                                 -Wno-SELRANGE -Wno-LATCH #These might be caused from not connecting everything properly
                                 -Wno-IMPLICITSTATIC
+                                -Wfuture-IEEEMAYDEPRECATE
                                 -Wno-IEEEMAYDEPRECATE
                                 #+define+COREV_ASSERT_OFF       #Fixes UVM error with CV32E40X (Needed when not using -DVPROC_SVA)
                                 #--clk clk_i
@@ -502,5 +506,9 @@ elseif( ${SCALAR_CORE} STREQUAL "cv32a60x" ) #TODO: Verify/Test support for floa
                                 -CFLAGS "-std=gnu++14 -O2")
 else()
     message(FATAL_ERROR "Unsupported Scalar Core Selected")
+endif()
+
+if(BUILD_CMO_UNIT_TESTS)
+    add_subdirectory(cmo)
 endif()
                               
